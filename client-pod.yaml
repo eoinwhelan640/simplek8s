@@ -11,7 +11,7 @@ kind: Pod
 metadata:
   # mostly used for logging and is the name in kubectl 
   name: client-pod
-  # label should match "selector" in the nodeport.yaml file
+  # label should match "selector"in the nodeport.yaml file
   labels:
     # remember "component" inst a keyword here, could easily do "tier: web", just has to match what we use to both files 
     component: web
@@ -20,7 +20,7 @@ spec:
   containers:
   # If had multiple containers can use name like a hostname like we do in docker-compose services, where they can find each other internally based on name
   - name: client
-    # We cant use our own image cos we added the line
+    # We cant use our own image bcos we added the line
     # "try_files $uri $uri/ /index.html;"
     # to nginx default.conf. We added that cos of some react bug but it breaks k8s
     # just use his image for this demo here, we make another app later, so this is just a demo
