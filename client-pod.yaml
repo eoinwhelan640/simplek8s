@@ -1,0 +1,33 @@
+#  Different apiVersions contain different types of objects we can create within k8s
+# So it basically works as a scope, eg there is a certain set of objects types within v1, Pod being one of them
+# sometime we might want some other object type, eg StatefulSet, which is in apiVersion: apps/v1
+# So we'd have to specify that api version. Is pretty much a case of looking up what type you need then checking which apiVersion it belongs to
+# they essentially function as class of items, defining the set of objects available
+apiVersion: v1
+# Use kind keyword to specifcy the type of k8s object
+# we want this to be
+# kubectl cli will interpret these yaml files and create the object we've specified 
+kind: Pod
+metadata:
+  # mostly used for logging and is the name in kubectl 
+  name: client-pod
+  # label should match "selector" in the nodeport.yaml file
+  labels:
+    # remember "component" inst a keyword here, could easily do "tier: web", just has to match what we use to both files 
+    component: web
+spec:
+  # We've created a pod that will run just one container inside of it
+  containers:
+  # If had multiple containers can use name like a hostname like we do in docker-compose services, where they can find each other internally based on name
+  - name: client
+    # We cant use our own image cos we added the line
+    # "try_files $uri $uri/ /index.html;"
+    # to nginx default.conf. We added that cos of some react bug but it breaks k8s
+    # just use his image for this demo here, we make another app later, so this is just a demo
+    #image: eoinwhelan64/fibonacci-client
+    image: stephengrider/multi-client
+    ports:
+      # Expose port 3000 on the container to the outside world
+      # Need to do more networking in client-node-port.yml for this port/networking to be fully set up
+      # containerPort matches tragetPort on other file
+      - containerPort: 3000

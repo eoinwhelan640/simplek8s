@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-node-port
+spec:
+  type: NodePort
+  ports:
+    - port: 3050
+      # Looking to expose this port on container to outside world
+      # this matches containerPort on other file
+      targetPort: 3000
+      # Use nodePort in our localhost:nodePort browser value to access the container
+      # Think of it as jumphost port ? in a way kinda
+      # Dont have to set a val for this, if leave it out its randomly allotted a port in range (30000-32767)
+      nodePort: 31515
+  # use this to find every other object with the same component label
+  # Anything with component:web will have traffic directed to it on ports listed above
+  selector:
+    component: web
