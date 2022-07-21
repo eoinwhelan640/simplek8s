@@ -5,6 +5,7 @@ metadata:
 spec:
   type: NodePort
   ports:
+    # port 3050 is the port on the service that internal objects on the node need to connect to to get pointed to 3000
     - port: 3050
       # Looking to expose this port on container to outside world
       # this matches containerPort on other file 
